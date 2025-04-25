@@ -1,5 +1,10 @@
 ## DevSecOps Pipeline Implementation for Tic Tac Toe Game
 
+![image](https://github.com/user-attachments/assets/4a0e021a-efdc-47d4-816c-253f8936aa49)
+
+
+![image](https://github.com/user-attachments/assets/a1cf85e7-d8ad-4fca-9900-6dffd657990c)
+
 # Tic Tac Toe Game
 
 ## Overview
@@ -28,7 +33,18 @@ This is a classic Tic Tac Toe game implemented using React.  It provides a clean
 
 ## Project Structure
 
-├── public/│   └── index.html        # Main HTML file├── src/│   ├── components/│   │   ├── Board.tsx       # Game board component│   │   ├── GameHistory.tsx # Game history display component│   │   ├── ScoreBoard.tsx  # Scoreboard component│   │   └── Square.tsx # Represents one square of the board│   ├── utils/│   │   └── gameLogic.ts  # Functions for calculating the winner and checking for a draw│   ├── App.tsx           # Main application component│   ├── index.css         # Global styles│   └── index.js          # Entry point of the React application├── package.json          # Project dependencies and scripts└── README.md             # Project documentation (this file)
+src/
+├── components/
+│   ├── Board.tsx       # Game board component
+│   ├── Square.tsx      # Individual square component
+│   ├── ScoreBoard.tsx  # Score tracking component
+│   └── GameHistory.tsx # Game history component
+├── utils/
+│   └── gameLogic.ts    # Game logic utilities
+├── App.tsx             # Main application component
+└── main.tsx           # Entry point 
+
+
 ## Logic of the Game
 
 The game logic is implemented in `src/utils/gameLogic.ts` and within the main `App.tsx` component. Here's a breakdown:
@@ -78,45 +94,6 @@ The game logic is implemented in `src/utils/gameLogic.ts` and within the main `A
     ```
     This will create an optimized production build of the application in the `build` directory.
 
-### Deployment
-
-The deployment process will depend on your chosen hosting platform. Here are some common options:
-
-#### 1.  **Netlify/Vercel:**
-
-* These platforms offer easy deployment for React applications.
-* Simply connect your repository to the platform and it will automatically build and deploy your application.
-* The `build` directory should be specified as the output directory.
-
-#### 2.  **GitHub Pages:**
-
-* You can deploy your app to GitHub Pages.
-    * Add the following to your `package.json`
-        ```json
-        "homepage": "http://{your_github_username}.github.io/{your_repo_name}"
-        ```
-    * Run these commands:
-        ```bash
-        npm run build
-        npm run deploy
-        ```
-    * You might need to install `gh-pages`:
-        ```bash
-        npm install gh-pages -D
-        ```
-    * Add the deploy script in `package.json`:
-        ```json
-        "scripts": {
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
-        }
-        ```
-
-#### 3.  **Other Hosting Providers:**
-
-* For other hosting providers (e.g., AWS, Heroku, etc.), follow their specific deployment instructions for React applications.  You'll typically need to:
-    * Create a production build.
-    * Configure a server to serve the static files from the `build` directory.
 
 ### Running in Development Mode
 
