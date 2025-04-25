@@ -1,4 +1,4 @@
-# CI/CD Pipeline for Node.js Application with Docker and Kubernetes
+# GitHub Actions CI/CD Pipeline for TypeScript Application 
 
 This repository contains a Node.js application configured with a full CI/CD pipeline using GitHub Actions. The pipeline includes testing, linting, building, containerizing the app with Docker, scanning for vulnerabilities, and deploying to a Kubernetes cluster.
 
@@ -63,3 +63,11 @@ npm ci           # Install dependencies
 npm run lint     # Lint the code
 npm test         # Run tests
 npm run build    # Build the project
+
+
+📂 Directory Structure
+.
+├── .github/workflows/ci-cd.yml    # GitHub Actions workflow file
+├── kubernetes/deployment.yml      # Kubernetes deployment manifest
+├── src/                           # Source code
+└── dist/                          # Build output
