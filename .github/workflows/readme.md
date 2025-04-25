@@ -1,73 +1,97 @@
-# GitHub Actions CI/CD Pipeline for TypeScript Application 
+# CI/CD Pipeline for Node.js Projects
 
-This repository contains a Node.js application configured with a full CI/CD pipeline using GitHub Actions. The pipeline includes testing, linting, building, containerizing the app with Docker, scanning for vulnerabilities, and deploying to a Kubernetes cluster.
+This document outlines a robust CI/CD pipeline tailored for Node.js projects, leveraging GitHub Actions to automate the complete software delivery lifecycle. This pipeline emphasizes best practices for continuous integration and continuous deployment, ensuring high-quality, reliable, and efficient deployments.
 
-## 📦 Features
+## Table of Contents
 
-- ✅ Automated unit testing using `npm test`
-- 🧹 Static code analysis with ESLint
-- 🔧 Build process using `npm run build`
-- 🐳 Docker image creation and push to GitHub Container Registry (GHCR)
-- 🔍 Security scanning using Trivy
-- ☸️ Auto-update Kubernetes deployment with the new Docker image
-- 🛠️ Smart skip for `kubernetes/deployment.yml` changes to avoid CI loops
+* [Overview](#overview)
+* [Workflow](#workflow)
+* [Jobs](#jobs)
+    * [Test](#test)
+    * [Lint](#lint)
+    * [Build](#build)
+    * [Docker](#docker)
+    * [Update Kubernetes Deployment](#update-kubernetes-deployment)
+* [Triggers](#triggers)
+* [Usage](#usage)
+* [Prerequisites](#prerequisites)
+* [Project Directory Structure](#project-directory-structure)
+* [Contributing](#contributing)
+* [License](#license)
 
-## 🚀 CI/CD Pipeline Overview
+## Overview
 
-### Triggers
-- On `push` to the `main` branch (except changes to `kubernetes/deployment.yml`)
-- On pull request to the `main` branch
+This pipeline automates the testing, linting, building, and deployment of Node.js applications.  It employs a modular design, where jobs are executed sequentially or in parallel based on their dependencies.  The pipeline is initiated by `push` events to the `main` branch (excluding changes to `kubernetes/deployment.yaml`) and `pull_request` events targeting the `main` branch, facilitating both continuous integration and deployment workflows.
 
-### Workflow Stages
+## Workflow
 
-1. **Unit Testing**
-   - Runs `npm test` to ensure code correctness.
+The workflow, defined in `.github/workflows/main.yml`, comprises the following jobs:
 
-2. **Linting**
-   - Runs `npm run lint` for static code analysis.
+1.  **Test**: Executes unit tests.
+2.  **Lint**: Performs static code analysis.
+3.  **Build**: Builds the Node.js project.
+4.  **Docker**: Builds a container image, performs vulnerability scanning, and pushes the image to the GitHub Container Registry.
+5.  **Update Kubernetes Deployment**: Updates the Kubernetes deployment manifest with the new container image tag.
 
-3. **Build**
-   - Executes `npm run build` and uploads the output as artifacts.
+## Jobs
 
-4. **Docker Build & Scan**
-   - Builds a Docker image using Buildx.
-   - Scans the image using Trivy for vulnerabilities (fails on CRITICAL/HIGH issues).
-   - Pushes the image to [GitHub Container Registry](https://ghcr.io/).
+### Test
 
-5. **Kubernetes Deployment Update**
-   - Updates the image tag in `kubernetes/deployment.yml` to the new image.
-   - Commits and pushes the updated manifest (skips CI using `[skip ci]`).
+* **Name**: Unit Testing
+* **Description**:  This job performs unit tests to ensure code functionality and prevent regressions.
 
-## 🐳 Docker Image
+### Lint
 
-Images are pushed to:  
-`ghcr.io/<owner>/<repo>:<tag>`
+* **Name**: Static Code Analysis
+* **Description**: This job performs static analysis of the codebase to identify potential errors and enforce code style guidelines.
 
-Tags include:
-- Short SHA
-- Branch name
-- `latest`
+### Build
 
-## ⚙️ Secrets Required
+* **Name**: Build
+* **Description**: This job compiles and prepares the Node.js project for deployment.
 
-Ensure the following secret is configured in your GitHub repository:
+### Docker
 
-- `TOKEN`: A GitHub Personal Access Token with `write:packages`, `repo`, and `workflow` scopes.
+* **Name**: Docker Build and Push
+* **Description**: This job builds a Docker image, performs vulnerability scanning, and pushes the image to the GitHub Container Registry.
 
-## 🧪 Commands
+### Update Kubernetes Deployment
 
-To run locally:
+* **Name**: Update Kubernetes Deployment
+* **Description**: This job updates the Kubernetes deployment manifest with the new Docker image tag to trigger a deployment.
 
-```bash
-npm ci           # Install dependencies
-npm run lint     # Lint the code
-npm test         # Run tests
-npm run build    # Build the project
+## Triggers
 
+The workflow is triggered by the following events:
 
-📂 Directory Structure
-.
-├── .github/workflows/ci-cd.yml    # GitHub Actions workflow file
-├── kubernetes/deployment.yml      # Kubernetes deployment manifest
-├── src/                           # Source code
-└── dist/                          # Build output
+* `push` events to the `main` branch, excluding changes to the `kubernetes/deployment.yaml` file.
+* `pull_request` events targeting the `main` branch.
+
+## Usage
+
+1.  **Set up GitHub Secrets**:
+    * Create a personal access token with `write:packages` and `repo` permissions.
+    * Add this token to your GitHub repository's secrets with the name `TOKEN`.
+2.  **Configure Kubernetes Deployment Manifest**:
+    * Ensure the `kubernetes/deployment.yaml` file in your repository contains the correct Docker image name and a tag placeholder. The workflow will automatically update the tag during the deployment process.
+3.  **Define Build Artifacts**:
+    * The Node.js build process must output the build artifacts to the `dist/` directory. This directory is then used to create the Docker image.
+4.  **Define npm Scripts**:
+    * The `package.json` file should contain the following npm scripts:
+        * `test`:  Execute unit tests.
+        * `lint`:  Run the code linter.
+        * `build`:  Build the project.
+
+## Prerequisites
+
+* A Node.js project with a `package.json` file.
+* Unit tests and a linting configuration for the project.
+* A `Dockerfile` in the repository root for building Docker images.
+* A Kubernetes deployment manifest (`kubernetes/deployment.yaml`) in the repository.
+* A GitHub repository.
+* GitHub Actions enabled for the repository.
+
+## Project Directory Structure
+
+├── .github/workflows/        # GitHub Actions workflow definitions│   └── main.yml            # CI/CD pipeline workflow├── kubernetes/             # Kubernetes deployment configurations│   └── deployment.yaml   # Kubernetes deployment manifest├── dist/                   # Build artifacts (output of npm run build)├── Dockerfile              # Docker image definition├── package.json            # Node.js project configuration├── src/                    # Source code directory│   ├── index.js          # Main application file│   └── ...               # Other source files├── test/                   # Unit tests│   └── ...               # Test files├── .eslintrc.json          # ESLint configuration (optional)└── README.md             # Project documentation
+
