@@ -1,6 +1,6 @@
-# CI/CD Pipeline for Node.js Projects
+# GitHub Actions CI/CD Pipeline 
 
-This document outlines a robust CI/CD pipeline tailored for Node.js projects, leveraging GitHub Actions to automate the complete software delivery lifecycle. This pipeline emphasizes best practices for continuous integration and continuous deployment, ensuring high-quality, reliable, and efficient deployments.
+This document outlines a robust CI/CD pipeline tailored for TypeScript Applications, leveraging GitHub Actions to automate the complete software delivery lifecycle. This pipeline emphasizes best practices for continuous integration and continuous deployment, ensuring high-quality, reliable, and efficient deployments.
 
 ## Table of Contents
 
@@ -14,10 +14,6 @@ This document outlines a robust CI/CD pipeline tailored for Node.js projects, le
     * [Update Kubernetes Deployment](#update-kubernetes-deployment)
 * [Triggers](#triggers)
 * [Usage](#usage)
-* [Prerequisites](#prerequisites)
-* [Project Directory Structure](#project-directory-structure)
-* [Contributing](#contributing)
-* [License](#license)
 
 ## Overview
 
@@ -81,17 +77,3 @@ The workflow is triggered by the following events:
         * `test`:  Execute unit tests.
         * `lint`:  Run the code linter.
         * `build`:  Build the project.
-
-## Prerequisites
-
-* A Node.js project with a `package.json` file.
-* Unit tests and a linting configuration for the project.
-* A `Dockerfile` in the repository root for building Docker images.
-* A Kubernetes deployment manifest (`kubernetes/deployment.yaml`) in the repository.
-* A GitHub repository.
-* GitHub Actions enabled for the repository.
-
-## Project Directory Structure
-
-├── .github/workflows/        # GitHub Actions workflow definitions│   └── main.yml            # CI/CD pipeline workflow├── kubernetes/             # Kubernetes deployment configurations│   └── deployment.yaml   # Kubernetes deployment manifest├── dist/                   # Build artifacts (output of npm run build)├── Dockerfile              # Docker image definition├── package.json            # Node.js project configuration├── src/                    # Source code directory│   ├── index.js          # Main application file│   └── ...               # Other source files├── test/                   # Unit tests│   └── ...               # Test files├── .eslintrc.json          # ESLint configuration (optional)└── README.md             # Project documentation
-
