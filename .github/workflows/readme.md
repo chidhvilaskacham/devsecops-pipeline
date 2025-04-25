@@ -21,7 +21,7 @@ This pipeline automates the testing, linting, building, and deployment of Node.j
 
 ## Workflow
 
-The workflow, defined in `.github/workflows/main.yml`, comprises the following jobs:
+The workflow, defined in `.github/workflows/ci-cd.yml`, comprises the following jobs:
 
 1.  **Test**: Executes unit tests.
 2.  **Lint**: Performs static code analysis.
