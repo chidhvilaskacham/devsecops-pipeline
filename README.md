@@ -32,7 +32,7 @@ This is a classic Tic Tac Toe game implemented using React.  It provides a clean
 * **Lucide React: Icons** The application uses icons from the Lucide React library.
 
 ## Project Structure
-
+```bash
 src/
 ├── components/
 │   ├── Board.tsx       # Game board component
@@ -43,7 +43,7 @@ src/
 │   └── gameLogic.ts    # Game logic utilities
 ├── App.tsx             # Main application component
 └── main.tsx           # Entry point 
-
+```
 
 ## Logic of the Game
 
